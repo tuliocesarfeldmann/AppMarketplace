@@ -1,0 +1,17 @@
+<div class="multiple-img-upload">
+    <div class="chose-file">
+        <input class="custom-file-input" type="file" name="fileUpload" id="fileUpload" (change)="onFileChanged($event)">
+        <label class="custom-file-label" for="fileUpload">Imagens</label>
+    </div>
+    <div class="details">
+        <span>{{ imgs.length }} / 5</span>
+        <span (click)="togleImgs=!togleImgs" style="cursor: pointer;">Ver</span>
+        <ul class="list-group" *ngIf="togleImgs">
+            <li class="list-group-item" *ngFor="let img of imgs">
+            {{ img.name }}
+            </li>
+        </ul>
+        <button type="button" (click)="clearImages()"><i class="fa fa-close"></i></button>
+        <button type="button" (click)="onUpload()" [disabled]="uploaded">UPLOAD</button>
+    </div>
+</div>

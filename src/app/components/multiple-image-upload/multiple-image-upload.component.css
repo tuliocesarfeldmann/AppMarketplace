@@ -1,0 +1,29 @@
+.custom-file-label {
+    margin-bottom: 0px;
+}
+
+.details {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+}
+
+.details > button {
+    background-color: transparent;
+    border-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.list-group {
+    position: absolute;
+    width: 40%;
+    margin-left: 10%;
+    margin-top: 5%;
+}
+
+.list-group-item {
+    margin: 0px;
+    padding: 1px;
+}

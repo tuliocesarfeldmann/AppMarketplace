@@ -1,0 +1,49 @@
+<div class="fixed-top">
+  <nav class="navbar navbar-light bg-faded">
+    <div class="container">
+      <div class="col-md-4">
+        <a class="navbar-brand" routerLink="">
+          <img src="../assets/logo.png" />
+        </a>
+      </div>
+      <ul class="col-md-8 d-flex flex-row align-items-center justify-content-end">
+        <li class="col-md-6">
+          <input #searchOffer type="text" class="form-control" placeholder="Pesquise por ofertas.." />
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let offer of offers">
+              <a routerLink="/offer/{{ offer.id }}" (click)="clearSearch()">{{ offer.title | noLongText }}</a>
+              <span></span>
+              <img [src]="offer.images[0].type + offer.images[0].url" alt="img" style="height: 30px; width: 50px; display: inline-block;">
+            </li>
+          </ul>
+        </li>
+        <li class="col-md-2">
+          <a routerLink="/order"><img src="../assets/carrinho.png" /></a>
+        </li>
+        <li class="d-flex flex-column align-items-center">
+          <span class="user">{{ currentUser }}</span>
+          <button class="sign-out" type="button" (click)="logout()"><i class="fa fa-sign-out"></i></button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="menu">
+    <div class="container">
+      <ul class="nav">
+        <div *ngFor="let category of categories">
+         <li class="nav-item" *ngIf="hasPermission(category.roles)"> 
+            <a class="nav-link" routerLinkActive="active" routerLink="{{ category.name }}">{{ category.name | uppercase }}</a>
+          </li>
+        </div>
+        <div style="margin-left: auto;" *ngIf="hasPermission([{name: 'ROLE_VENDEDOR'}])">
+          <button type="button" class="nav-link" routerLink="/offerMagnament">VENDAS</button>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="banner">
+  <img src="/assets/banners/img_1.jpg" />
+</div>

@@ -1,0 +1,29 @@
+h1 {
+    color: #555
+}
+
+.oferta {
+    margin-top: 25px
+}
+
+.oferta img {
+    width: 372px;
+    height: 240px;
+}
+
+.thumbnails {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.thumbnails img {
+    width: 150px;
+    height: 80px;
+    margin: 5px 5px;
+    margin-bottom: 5px;
+}
+
+.container > .row:nth-last-child(1) {
+    margin-top: 20px;
+    margin-bottom:80px;
+}

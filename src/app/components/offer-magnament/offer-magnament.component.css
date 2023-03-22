@@ -1,0 +1,16 @@
+.offer-magnament {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.offer-magnament > div > button {
+    border-style: none;
+}
+
+tr > td {
+    vertical-align: middle;
+}
+
+td > button {
+    margin: 5px;
+}

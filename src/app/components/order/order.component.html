@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="ordem-compra">
+    <form [formGroup]="form" (ngSubmit)="confirmOrder()" novalidate>
+
+      <h5>Sua Compra</h5>
+      <hr />
+
+      <div *ngIf="cartItems.length > 0; else cartEmpty">
+        <div *ngFor="let item of cartItems" class="form-row d-flex align-items-center item"
+          style="background: #FAFAFA; border-bottom: solid 1px #F0F0F0">
+          <div class="form-group col-sm-1">
+            <img [src]="item.offer.images[0].type + item.offer.images[0].url" class="img-fluid">
+          </div>
+          <div class="form-group col-sm-6">
+            {{ item.offer.title }}
+            <br />
+            {{ item.offer.description }}
+          </div>
+
+          <div>
+            <div class="row">
+              <div class="col">
+                <button (click)="subAmount(item)" type="button" class="btn btn-link">-</button>
+                {{ item.amount }}
+                <button (click)="addAmount(item)" type="button" class="btn btn-link">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-2 d-flex justify-content-end">
+            {{ item.offer.value * item.amount | currency }}
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="cartItems.length > 0" class="form-row">
+        <div class="form-group col d-flex justify-content-end">
+          <h4>Total do pedido: {{ getTotalAmount() | currency }}</h4>
+        </div>
+      </div>
+      <br />
+
+      <h5>Dados de entrega</h5>
+      <hr />
+
+      <div class="form-row">
+
+        <div class="form-group col-md-6">
+          <input name="address" formControlName="address" type="text" class="form-control" placeholder="Endereço"
+            autocomplete="off">
+          <small
+            class="{{ form.get('address').invalid && form.get('address').touched ? 'form-text text-danger' : 'fade' }}">Endereço
+            inválido</small>
+        </div>
+
+        <div class="form-group col-md-1">
+          <input name="number" formControlName="number" type="text" class="form-control" placeholder="Número"
+            autocomplete="off">
+          <small
+            class="{{ form.get('number').invalid && form.get('number').touched ? 'form-text text-danger' : 'fade' }}">Número
+            inválido</small>
+        </div>
+
+        <div class="form-group col-md-4">
+          <input name="complement" formControlName="complement" type="text" class="form-control"
+            placeholder="Complemento" autocomplete="off">
+        </div>
+
+      </div>
+      <br />
+
+      <h5>Dados de pagamento</h5>
+      <hr />
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <select name="formOfPayment" formControlName="formOfPayment" class="form-control">
+            <option value="">Selecione uma opção</option>
+            <option *ngFor="let type of formOfPaymentEnum | keyvalue" value="{{type.key}}">{{type.value}}</option>
+          </select>
+          <small class="{{ form.get('formOfPayment').invalid && form.get('formOfPayment').touched ? 'form-text text-danger' : 'fade' }}">Forma de pagamento inválida</small>
+        </div>
+      </div>
+
+      <hr />
+      <button type="submit" [disabled]="cartItems.length === 0" class="btn btn-primary btn-lg">Cofirmar compra</button>
+    </form>
+  </div>
+</div>
+
+<ng-template #cartEmpty>
+  <div class="font-weight-bold d-flex justify-content-center" style="background: #FAFAFA; border-bottom: solid 1px #F0F0F0">
+    Seu carrinho está vazio. Aproveite as ofertas!
+  </div>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Pedido efetuado com sucesso!</h5>
+  </div>
+  <div class="modal-body">O número do seu pedido é {{ idOrder }}</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')" routerLink="/">
+      Voltar
+    </button>
+  </div>
+</ng-template>

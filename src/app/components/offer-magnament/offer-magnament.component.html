@@ -1,0 +1,34 @@
+<div class="offer-magnament">
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" type="button" routerLink="/registerOffer">Registrar Oferta</button>
+    </div>
+    <table class="table table-striped table-bordered table-sm">
+        <title>Minhas ofertas</title>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Titulo</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="offers.length == 0">
+            <tr>
+                <td colspan="11" style="text-align: center;">
+                    <p class="pt-2">Não há registros para o filtro aplicado</p>
+                </td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="offers.length > 0">
+            <tr *ngFor="let offer of offers">
+                <td>{{ offer.title }}</td>
+                <td>{{ offer.category }}</td>
+                <td>{{ offer.value | currency}}</td>
+                <td>
+                    <button type="button" (click)="edit(offer)"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button type="button" (click)="remove(offer)"><i class="fa-solid fa-trash"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
