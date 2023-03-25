@@ -1,6 +1,7 @@
 export class Category {
     id?: number
-    title: string
     name: string
+    description: string
+    path: string
     roles: any[]
 }

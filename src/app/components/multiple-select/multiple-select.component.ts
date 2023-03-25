@@ -23,21 +23,24 @@ export class MultipleSelectComponent {
   }
 
   getSelectedValue(status:Boolean,value:any){
-  if(status){
-    this.checkedList.push(value.name);  
-    this.selectedItems.push(value);
-  }else{
-      var index = this.checkedList.indexOf(value);
-      this.checkedList.splice(index,1);
-  }
+    console.log(status, value)
+    if(status){
+      this.checkedList.push(value.name);  
+      this.selectedItems.push(value);
+    } else {
+        var index = this.checkedList.indexOf(value);
+        this.checkedList.splice(index,1);
+        index = this.selectedItems.indexOf(value)
+        this.selectedItems.splice(index, 1)
+    }
   
-  this.currentSelected = {checked : status, name:value};
+    this.currentSelected = {checked : status, name:value};
 
-  //share checked list
-  this.shareCheckedlist();
-  
-  //share individual selected item
-  this.shareIndividualStatus();
+    //share checked list
+    this.shareCheckedlist();
+    
+    //share individual selected item
+    this.shareIndividualStatus();
   }
   shareCheckedlist(){
         this.shareCheckedList.emit(this.selectedItems);

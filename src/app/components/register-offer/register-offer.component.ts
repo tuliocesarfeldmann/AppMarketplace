@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Category } from 'src/app/shared/models/category.model';
 import { Offer } from 'src/app/shared/models/offer.model';
 import { CategoryService } from 'src/app/shared/services/category.service';
@@ -24,6 +24,7 @@ export class RegisterOfferComponent implements OnInit {
     private formBuilder: FormBuilder,
     private offerService: OffersService,
     private categoryService: CategoryService,
+    private router: Router,
     private route: ActivatedRoute
   ) { 
     this.form = this.formBuilder.group({
@@ -35,7 +36,7 @@ export class RegisterOfferComponent implements OnInit {
       category: new FormControl("", Validators.required),
       images: new FormControl([], [Validators.required])
     })
-   }
+  }
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe({
@@ -60,6 +61,14 @@ export class RegisterOfferComponent implements OnInit {
 
   uploadImages(imgs: any[]){
     this.form.controls["images"].setValue(imgs)
+  }
+
+  onSelectCategory(event: Event): void {
+    let option = (<HTMLInputElement> event.target).value
+
+    if(option === 'newCategory'){
+      this.router.navigate(['/createCategory'])
+    }
   }
 
   registerOffer(){

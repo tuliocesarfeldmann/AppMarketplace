@@ -33,7 +33,7 @@
       <ul class="nav">
         <div *ngFor="let category of categories">
          <li class="nav-item" *ngIf="hasPermission(category.roles)"> 
-            <a class="nav-link" routerLinkActive="active" routerLink="{{ category.name }}">{{ category.name | uppercase }}</a>
+            <a class="nav-link" routerLinkActive="active" routerLink="{{ category.path }}">{{ category.name | uppercase }}</a>
           </li>
         </div>
         <div style="margin-left: auto;" *ngIf="hasPermission([{name: 'ROLE_VENDEDOR'}])">

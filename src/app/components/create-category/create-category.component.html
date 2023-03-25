@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="create-category">
+        <form [formGroup]="form" (ngSubmit)="createCategory()" novalidate>
+            <h5>Categoria</h5>
+            <hr />
+    
+            <div class="form-row">
+            
+            <div class="form-group col-md-4">
+                <input name="name" formControlName="name" type="text" class="form-control" placeholder="Titulo"
+                autocomplete="off">
+                <small class="{{ form.get('name').invalid && form.get('name').touched ? 'form-text text-danger' : 'fade' }}">Nome inválido</small>
+            </div>
+    
+            <div class="form-group col-md-8">
+                <input name="description" formControlName="description" type="text" class="form-control" placeholder="Descrição"
+                autocomplete="off">
+                <small class="{{ form.get('description').invalid && form.get('description').touched ? 'form-text text-danger' : 'fade' }}">Descrição inválido</small>
+            </div>
+    
+            </div>
+
+            <div class="form-row">
+            
+                <div class="form-group col-md-4">
+                    <input name="path" formControlName="path" type="text" class="form-control" placeholder="Path | Ex: 'restaurant'"
+                        autocomplete="off">
+                    <small class="{{ form.get('path').invalid && form.get('path').touched ? 'form-text text-danger' : 'fade' }}">Path inválido</small>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <app-multiple-select [list]="rolesList" (shareCheckedList)="roleList($event)"></app-multiple-select>
+                    <small class="{{ form.get('roles').invalid && form.get('roles').touched ? 'form-text text-danger' : 'fade' }}">Roles inválido</small>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">Cadastrar Categoria</button>
+        </form>
+    </div>
+</div>

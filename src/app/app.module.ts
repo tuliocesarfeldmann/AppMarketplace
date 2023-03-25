@@ -26,6 +26,7 @@ import { MultipleSelectComponent } from './components/multiple-select/multiple-s
 import { RegisterOfferComponent } from './components/register-offer/register-offer.component';
 import { MultipleImageUploadComponent } from './components/multiple-image-upload/multiple-image-upload.component';
 import { OfferMagnamentComponent } from './components/offer-magnament/offer-magnament.component';
+import { CreateCategoryComponent } from './components/create-category/create-category.component';
 
 registerLocaleData(localePt)
 
@@ -37,7 +38,7 @@ export function initializeCustomRoutes(router: Router, categoryService: Category
           router.resetConfig([
             ...router.config,
             {
-              path: category.name,
+              path: category.path,
               component: CategoryComponent,
               canActivate: [AuthGuard],
               data: { roles: category.roles.map(r => r.name) }
@@ -66,7 +67,8 @@ export function initializeCustomRoutes(router: Router, categoryService: Category
     MultipleSelectComponent,
     RegisterOfferComponent,
     MultipleImageUploadComponent,
-    OfferMagnamentComponent
+    OfferMagnamentComponent,
+    CreateCategoryComponent
   ],
   imports: [
     BrowserModule,

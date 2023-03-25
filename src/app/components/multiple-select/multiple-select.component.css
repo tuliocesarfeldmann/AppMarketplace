@@ -19,10 +19,10 @@
 
 .drop-show {
     padding: 4px;
-    width: 15%;
+    width: 80%;
     background-color: #FFF;
     border: 1px solid #BABABA;
-    position: absolute;
+    position: relative;
     text-align: left;
     z-index: 100;
     -webkit-box-shadow: 0 6px 10px rgba(0,0,0,.15);

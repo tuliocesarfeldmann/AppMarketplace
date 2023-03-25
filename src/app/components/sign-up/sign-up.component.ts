@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Role } from 'src/app/shared/enums/roles.enum';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ROLES_LIST } from 'src/app/util/api-util/utils';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,10 +11,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class SignUpComponent implements OnInit {
 
   public form: FormGroup
-  public rolesList = [
-    { id: 1, name: "CLIENTE" },
-    { id: 2, name: "VENDEDOR" }
-  ]
+  public rolesList = ROLES_LIST
 
   constructor(
     private formBuilder: FormBuilder,
