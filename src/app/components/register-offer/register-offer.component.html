@@ -46,7 +46,7 @@
             <div class="form-group col-md-4">
                 <select class="form-control" formControlName="category" (change)="onSelectCategory($event)">
                     <option value="">Categoria...</option>
-                    <option [ngValue]="category" *ngFor="let category of categories">{{ category.name | uppercase }}</option>
+                    <option [ngValue]="category" *ngFor="let category of categories" [selected]="form.controls['category'].value && form.controls['category'].value.name === category.name">{{ category.name | uppercase }}</option>
                     <option value="newCategory">+ Criar Categoria</option>
                 </select>
                 <small class="{{ form.get('category').invalid && form.get('category').touched ? 'form-text text-danger' : 'fade' }}">Categoria inválida</small>

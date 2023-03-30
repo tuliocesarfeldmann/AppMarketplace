@@ -22,7 +22,7 @@
         <tbody *ngIf="offers.length > 0">
             <tr *ngFor="let offer of offers">
                 <td>{{ offer.title }}</td>
-                <td>{{ offer.category }}</td>
+                <td>{{ offer.category.name }}</td>
                 <td>{{ offer.value | currency}}</td>
                 <td>
                     <button type="button" (click)="edit(offer)"><i class="fa-solid fa-pen-to-square"></i></button>

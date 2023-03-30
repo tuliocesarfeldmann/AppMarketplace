@@ -34,20 +34,20 @@ export function initializeCustomRoutes(router: Router, categoryService: Category
   return () => {
     categoryService.getCategories().subscribe({
       next: (res: Category[]) => {
+        const routes = router.config;
         res.forEach((category) => {
-          router.resetConfig([
-            ...router.config,
-            {
-              path: category.path,
-              component: CategoryComponent,
-              canActivate: [AuthGuard],
-              data: { roles: category.roles.map(r => r.name) }
-            }
-          ])
-        })
-      }
-    })
-  }
+          routes.push({
+            path: category.path,
+            component: CategoryComponent,
+            canActivate: [AuthGuard],
+            data: { roles: category.roles.map(r => r.name) }
+          });
+        });
+        router.resetConfig(routes);
+      },
+      error: (err) => console.log(err)
+    });
+  };
 }
 
 @NgModule({
@@ -81,8 +81,7 @@ export function initializeCustomRoutes(router: Router, categoryService: Category
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: APP_INITIALIZER, useFactory: initializeCustomRoutes, multi: true, deps: [Router, CategoryService] }
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

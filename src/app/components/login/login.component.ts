@@ -2,9 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
-import { first, Subscription } from 'rxjs';
+import { first, Subscription, tap } from 'rxjs';
+import { initializeCustomRoutes } from 'src/app/app.module';
 import { Login } from 'src/app/shared/models/login.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CategoryService } from 'src/app/shared/services/category.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService, private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private categoryService: CategoryService
     ) {
       if(authService.isLogged){
         router.navigate([""])
@@ -42,7 +45,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(): void {
     if (this.form.valid) {
       this.loginSub = this.authService.login(new Login(this.f["username"].value, this.f["password"].value)).pipe(
-        first()
+        first(),
+        tap(() => {
+          let initRoutes = initializeCustomRoutes(this.router, this.categoryService)
+          initRoutes()
+        })
       ).subscribe(
         resp => {
           this.router.navigate([this.returnUrl])
@@ -52,6 +59,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //this.loginSub.unsubscribe()
+    this.loginSub.unsubscribe()
   }
 }

@@ -41,7 +41,7 @@ export class CategoryComponent implements OnInit {
   }
 
   getOffersByCategory(): void {
-    this.getOfferSub = this.offersService.getOffers({ category_id: this.category.id }).subscribe({
+    this.getOfferSub = this.offersService.getOffers({ 'category.id': this.category.id }).subscribe({
       next: (res: Offer[]) => this.offers = res
     })
   }
