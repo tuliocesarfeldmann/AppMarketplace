@@ -43,6 +43,7 @@ export function initializeCustomRoutes(router: Router, categoryService: Category
             data: { roles: category.roles.map(r => r.name) }
           });
         });
+        console.log(routes)
         router.resetConfig(routes);
       },
       error: (err) => console.log(err)

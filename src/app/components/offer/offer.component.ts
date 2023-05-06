@@ -4,6 +4,7 @@ import { Offer } from 'src/app/shared/models/offer.model';
 import { OffersService } from 'src/app/shared/services/offers.service';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { Subscription } from 'rxjs';
+import toaster from 'toastr';
 
 @Component({
   selector: 'app-offer',
@@ -32,7 +33,9 @@ export class OfferComponent implements OnInit, OnDestroy {
   }
 
   addOrder(): void {
-    this.cartService.saveCartItem(this.offer).subscribe()
+    this.cartService.saveCartItem(this.offer).subscribe({
+      next: () => toaster.success("Item adicionado ao carrinho com sucesso!")
+    })
   }
 
   ngOnDestroy(): void {

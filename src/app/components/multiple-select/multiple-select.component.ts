@@ -23,7 +23,6 @@ export class MultipleSelectComponent {
   }
 
   getSelectedValue(status:Boolean,value:any){
-    console.log(status, value)
     if(status){
       this.checkedList.push(value.name);  
       this.selectedItems.push(value);

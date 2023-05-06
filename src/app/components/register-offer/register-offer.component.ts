@@ -5,6 +5,7 @@ import { Category } from 'src/app/shared/models/category.model';
 import { Offer } from 'src/app/shared/models/offer.model';
 import { CategoryService } from 'src/app/shared/services/category.service';
 import { OffersService } from 'src/app/shared/services/offers.service';
+import toaster from 'toastr';
 
 @Component({
   selector: 'app-register-offer',
@@ -74,7 +75,11 @@ export class RegisterOfferComponent implements OnInit {
   registerOffer(){
     if(this.form.valid){
       let offer: Offer = Object.assign(this.form.value, { contraste: true })
-      this.offerService.saveOffer(offer).subscribe()
+      this.offerService.saveOffer(offer).subscribe({
+        next: () => { 
+          toaster.success("Oferta criada com sucesso!")
+        }
+      })
     } else {
       this.form.markAllAsTouched()
     }
@@ -83,7 +88,9 @@ export class RegisterOfferComponent implements OnInit {
   updateOffer(){
     if(this.form.valid){
       let offer: Offer = Object.assign(this.form.value, { id: this.offerId, contraste: true })
-      this.offerService.updateOffer(offer).subscribe()
+      this.offerService.updateOffer(offer).subscribe({
+        next: () => toaster.success("Oferta atualizada com sucesso!")
+      })
     } else {
       this.form.markAllAsTouched()
     }

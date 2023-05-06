@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Offer } from 'src/app/shared/models/offer.model';
 import { OffersService } from 'src/app/shared/services/offers.service';
+import toaster from 'toastr';
 
 @Component({
   selector: 'app-offer-magnament',
@@ -35,6 +36,7 @@ export class OfferMagnamentComponent implements OnInit {
       next: () => {
         let idx = this.offers.indexOf(offer)
         this.offers.splice(idx, 1)
+        toaster.success("Oferta removida com sucesso!")
       }
     })
   }

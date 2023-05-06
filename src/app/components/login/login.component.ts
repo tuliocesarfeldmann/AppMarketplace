@@ -7,6 +7,7 @@ import { initializeCustomRoutes } from 'src/app/app.module';
 import { Login } from 'src/app/shared/models/login.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CategoryService } from 'src/app/shared/services/category.service';
+import toaster from 'toastr';
 
 @Component({
   selector: 'app-login',
@@ -14,22 +15,20 @@ import { CategoryService } from 'src/app/shared/services/category.service';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
   public form: FormGroup;
   private returnUrl: string;
-
-  private loginSub: Subscription
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService, private router: Router,
     private route: ActivatedRoute,
     private categoryService: CategoryService
-    ) {
-      if(authService.isLogged){
-        router.navigate([""])
-      }
+  ) {
+    if (authService.isLogged) {
+      router.navigate([""])
+    }
 
     this.form = this.formBuilder.group({
       username: new FormControl("", [Validators.required]),
@@ -44,21 +43,21 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login(): void {
     if (this.form.valid) {
-      this.loginSub = this.authService.login(new Login(this.f["username"].value, this.f["password"].value)).pipe(
+      this.authService.login(new Login(this.f["username"].value, this.f["password"].value)).pipe(
         first(),
         tap(() => {
           let initRoutes = initializeCustomRoutes(this.router, this.categoryService)
           initRoutes()
         })
-      ).subscribe(
-        resp => {
+      ).subscribe({
+        next: () => {
           this.router.navigate([this.returnUrl])
+        },
+        error: (e) => {
+          toaster.error("Usuario ou senha incorretos!")
+          this.form.reset();
         }
-      )
+      })
     }
-  }
-
-  ngOnDestroy(): void {
-    this.loginSub.unsubscribe()
   }
 }

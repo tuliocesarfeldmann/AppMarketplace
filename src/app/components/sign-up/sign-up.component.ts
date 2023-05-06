@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ROLES_LIST } from 'src/app/util/api-util/utils';
+import toaster from 'toastr';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,7 +17,8 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { 
     this.form = this.formBuilder.group({
       username: new FormControl("", [Validators.required, Validators.minLength(5)]),
@@ -32,6 +35,14 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp(): void {
-    this.authService.signUp(this.form.value).subscribe();
+    this.authService.signUp(this.form.value).subscribe({
+      next: () => {
+        this.router.navigate(["/login"])
+        toaster.success("Usuário criado com sucesso!")
+      },
+      error: () => {
+        this.form.reset()
+      }
+    });
   }
 }

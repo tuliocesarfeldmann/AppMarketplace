@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Category } from 'src/app/shared/models/category.model';
 import { CategoryService } from 'src/app/shared/services/category.service';
 import { ROLES_LIST } from 'src/app/util/api-util/utils';
+import toaster from 'toastr';
 
 @Component({
   selector: 'app-create-category',
@@ -30,14 +31,15 @@ export class CreateCategoryComponent implements OnInit {
   }
 
   roleList(item:any[]){
-    console.log("create-category: ", item)
     this.form.controls["roles"].setValue(item)
   }
 
   createCategory(): void {
     let category: Category = this.form.value
 
-    this.categoryService.saveCategory(category).subscribe()
+    this.categoryService.saveCategory(category).subscribe({
+      next: () => toaster.success("Categoria criada com sucesso!")
+    })
   }
 
 }
